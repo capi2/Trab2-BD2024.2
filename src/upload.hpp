@@ -5,28 +5,14 @@
 #include <fstream>
 #include <string>
 #include <regex>
-#include "../lib/Register.hpp"
-#include "../lib/BPTree.hpp"
-#include "../lib/Hash.hpp"
-
+#include "Registro.hpp"
+#include "Bloco.hpp"
+#include "Hash.hpp"
 
 class Reader {
 
 private:
-    static Register stringToRegister(std::string line) {
-        /*
-        std::regex tokenPattern("\"(.*?)\"");
-        std::smatch match;
-        std::vector<std::string> tokens;
-
-        // Procurando os valores na linha
-        std::string::const_iterator searchStart(line.cbegin());
-        while (std::regex_search(searchStart, line.cend(), match, tokenPattern)) {
-            tokens.push_back(match[1].str());  // Adiciona o valor capturado à lista de tokens
-            searchStart = match.suffix().first;  // Move o iterador para a próxima parte da string
-        }
-        */
-
+    static std::vector<std::string> extractTokens(std::string line) {
         std::vector<std::string> tokens;
         std::string token;
         bool in_quotes = false;
@@ -47,51 +33,56 @@ private:
         // Adiciona o último token
         tokens.push_back(token);
 
-        // Exibe os tokens
-        if (tokens.size() != 7) {
-            for (const auto& t : tokens) {
-                std::cout << '[' << t << ']' << std::endl;
-            }
-            std::cout << "\n" << std::endl;
-        }
-
-        if(tokens.size() != 7) {
-            std::cout << "\nlinha estranha com " << tokens.size() << " tokens\n" << line << "\n" << std::endl;
-        } else {
-            int id = std::stoi(tokens[0]);
-            std::string titulo = tokens[1];
-        }
-
-        //for(int i = 0; i < tokens.size(); i++) {
-        //    std::cout << tokens[i] << std::endl;
-        //}
-
-
-        return Register();
+        return tokens;
     }
 
 public:
     static bool uploadCSV(std::string filePath) {
         std::ifstream file;
         std::string line;
-        Register newRegister;
+        Registro newRegister;
 
-        line.reserve(sizeof(Register) + 500);
+        line.reserve(sizeof(Registro) + 500); // Buffer para armazenar informações da linha
 
         file.open(filePath);
-
-        if (file.fail()) {
-            std::cout << "Erro ao abrir o arquivo!" << std::endl;
-            return 1;
-        }
+        if (file.fail()) { std::cout << "Erro ao abrir o arquivo!" << std::endl; return 1; }
 
         int i = 0;
-        while(getline(file, line)) {
-            //std::cout << "LINE\n" << line << "\nLINE\n" << std::endl;
-            newRegister = stringToRegister(line);
+        while(true) {
+
+            if(!getline(file, line)) {break;}
+
+            std::vector<std::string> tokens = extractTokens(line);
+
+            if(tokens.size() != 7) { // Inconsistência no dataset
+                std::string missingLine;
+                if(!getline(file, missingLine)) {break;}
+
+                std::cout << "Inconsistence found\n" << std::endl;
+
+                std::cout << "currentLine: " << line << "\n" << "missingLine: " << missingLine << "\n" << "completeLine: " << line + missingLine << "\n" << std::endl;
+
+                line = line + missingLine;
+
+                tokens = extractTokens(line);
+            }
 
 
-            //colocar nas estruturas
+
+
+
+            
+
+            /*
+            // Exibe os tokens
+            if (tokens.size() != 7) {
+                for (const auto& t : tokens) {
+                    std::cout << '[' << t << ']' << std::endl;
+                }
+                std::cout << "\n" << std::endl;
+            }*/
+
+
             if( i == 5 ) {
                 //exit(0);
             }
