@@ -5,32 +5,28 @@
 #include <cstdlib>
 #include <cstdio>
 
-#define TAMANHO_BLOCO 5  // Defina o tamanho apropriado do bloco
+#define MAX_REG_BLOCO 2  // Número de registros por bloco
+#define TAMANHO_BLOCO 4096
 
-// Estrutura do bloco de overflow
-struct BlocoOverflow {
-    Registro registros[TAMANHO_BLOCO];
-    int count;
-    int proximoRRN;  // RRN do próximo bloco de overflow
-};
-
-// Estrutura do bloco principal
 struct Bloco {
-    Registro registros[TAMANHO_BLOCO];
-    int count;
-    int overflowRRN;  // RRN do primeiro bloco de overflow
+    Registro registros[MAX_REG_BLOCO];
+    int numRegistros;
+    int proxBloco; // Índice do próximo bloco de overflow (-1 se não houver)
+    char padding[4096 - (sizeof(Registro) * MAX_REG_BLOCO) - sizeof(int)*2];
+
+    Bloco() {
+        numRegistros = 0;
+        proxBloco = -1; // -1 indica que não há bloco de overflow
+    }
 };
 
-// Função para inicializar um bloco principal
-void inicializarBloco(Bloco* bloco) {
-    bloco->count = 0;
-    bloco->overflowRRN = -1;  // -1 indica que não há overflow
-}
+void imprimeBloco(const Bloco& bloco) {
+    std::cout << "numRegistros: " << bloco.numRegistros << std::endl;
 
-// Função para inicializar um bloco de overflow
-void inicializarBlocoOverflow(BlocoOverflow* blocoOverflow) {
-    blocoOverflow->count = 0;
-    blocoOverflow->proximoRRN = -1;  // -1 indica que não há próximo bloco
+    for(int i = 0; i < bloco.numRegistros; i++) {
+        std::cout << "Registro [" << i << "]:" << std::endl;
+        imprimeRegistro(bloco.registros[i]);
+    }
 }
 
 #endif // BLOCO_HPP

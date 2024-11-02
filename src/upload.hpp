@@ -5,9 +5,7 @@
 #include <fstream>
 #include <string>
 #include <regex>
-#include "Registro.hpp"
-#include "Bloco.hpp"
-#include "Hash.hpp"
+#include "../lib/Hash.hpp"
 
 class Reader {
 
@@ -38,6 +36,12 @@ private:
 
 public:
     static bool uploadCSV(std::string filePath) {
+
+        if (TabelaHash::buscar(1)) {
+            std::cout << "Arquivo de dados já foi preenchido!" << std::endl;
+            return 1;
+        }
+
         std::ifstream file;
         std::string line;
         Registro newRegister;
@@ -47,6 +51,8 @@ public:
         file.open(filePath);
         if (file.fail()) { std::cout << "Erro ao abrir o arquivo!" << std::endl; return 1; }
 
+
+        std::cout << "Lendo arquivo CSV!" << std::endl;
         int i = 0;
         while(true) {
 
@@ -67,6 +73,17 @@ public:
                 tokens = extractTokens(line);
             }
 
+            int id = std::stoi(tokens[0]);
+            const char* titulo = tokens[1].c_str();
+            int ano = std::stoi(tokens[2]);
+            const char* autores = tokens[3].c_str();
+            int citacoes = std::stoi(tokens[4]);
+            time_t atualizacao = static_cast<time_t>(std::stol(tokens[5]));
+            const char* snippet = tokens[6].c_str();
+
+            Registro newRegistro = criarRegistro(id, titulo, ano, autores, citacoes, atualizacao, snippet);
+
+            TabelaHash::inserir(newRegistro);
 
 
 
@@ -75,16 +92,16 @@ public:
 
             /*
             // Exibe os tokens
-            if (tokens.size() != 7) {
+            if (tokens.size() != 1) {
                 for (const auto& t : tokens) {
                     std::cout << '[' << t << ']' << std::endl;
                 }
                 std::cout << "\n" << std::endl;
-            }*/
-
+            }
+            */
 
             if( i == 5 ) {
-                //exit(0);
+                return 0;
             }
             i++;
         }

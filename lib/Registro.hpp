@@ -1,8 +1,12 @@
 #ifndef REGISTRO_HPP
 #define REGISTRO_HPP
 
+#include <iostream>
 #include <ctime>
 #include <cstring>
+#include <iomanip>
+
+#define TOTAL_MAXIMO_REGISTROS 1549146
 
 // Definição da estrutura Registro
 struct Registro {
@@ -29,6 +33,21 @@ Registro criarRegistro(int id, const char* titulo, int ano, const char* autores,
     std::strncpy(reg.snippet, snippet, 1024);
     reg.snippet[1024] = '\0';
     return reg;
+}
+
+void imprimeRegistro(const Registro& reg) {
+    // Converte a data de atualização para um formato legível
+    char buffer[100];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&reg.atualizacao));
+
+    // Imprime os detalhes do registro
+    std::cout << "ID: " << reg.id << std::endl;
+    std::cout << "Título: " << reg.titulo << std::endl;
+    std::cout << "Ano: " << reg.ano << std::endl;
+    std::cout << "Autores: " << reg.autores << std::endl;
+    std::cout << "Citações: " << reg.citacoes << std::endl;
+    std::cout << "Atualização: " << buffer << std::endl;
+    std::cout << "Snippet: " << reg.snippet << std::endl;
 }
 
 #endif // REGISTRO_HPP
