@@ -34,6 +34,28 @@ private:
         return tokens;
     }
 
+    static std::streampos obterTamanhoArquivo(std::ifstream& file) {
+        file.seekg(0, std::ios::end);   // Vai para o final do arquivo
+        std::streampos tamanho = file.tellg(); // Obtém a posição (em bytes) do final
+        file.seekg(0, std::ios::beg);   // Volta ao início do arquivo
+        return tamanho;
+    }
+
+    static void mostrarProgresso(std::streampos atual, std::streampos total) {
+        int largura = 50; // Largura da barra de progresso
+        float progresso = static_cast<float>(atual) / total;
+        int pos = largura * progresso;
+
+        std::cout << "[";
+        for (int i = 0; i < largura; ++i) {
+            if (i < pos) std::cout << "=";
+            else if (i == pos) std::cout << ">";
+            else std::cout << " ";
+        }
+        std::cout << "] " << int(progresso * 100.0) << " %\r";
+        std::cout.flush();
+    }
+
 public:
     static bool uploadCSV(std::string filePath) {
 
@@ -53,8 +75,16 @@ public:
 
 
         std::cout << "Lendo arquivo CSV!" << std::endl;
+
+        std::streampos totalBytes = obterTamanhoArquivo(file);
+
         int i = 0;
         while(true) {
+            // Obtém a posição atual no arquivo em bytes
+            std::streampos posAtual = file.tellg();
+            
+            // Mostra a barra de progresso
+            mostrarProgresso(posAtual, totalBytes);
 
             if(!getline(file, line)) {break;}
 
@@ -105,6 +135,8 @@ public:
             // }
             // i++;
         }
+
+        std::cout << std::endl << "Leitura arquivo csv completo!" << std::endl;
 
         return 0;
     }

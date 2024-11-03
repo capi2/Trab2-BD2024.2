@@ -47,28 +47,6 @@ private:
         arquivo.close();
     }
 
-    std::streampos obterTamanhoArquivo(std::ifstream& file) {
-        file.seekg(0, std::ios::end);   // Vai para o final do arquivo
-        std::streampos tamanho = file.tellg(); // Obtém a posição (em bytes) do final
-        file.seekg(0, std::ios::beg);   // Volta ao início do arquivo
-        return tamanho;
-    }
-
-    void mostrarProgresso(std::streampos atual, std::streampos total) {
-        int largura = 50; // Largura da barra de progresso
-        float progresso = static_cast<float>(atual) / total;
-        int pos = largura * progresso;
-
-        std::cout << "[";
-        for (int i = 0; i < largura; ++i) {
-            if (i < pos) std::cout << "=";
-            else if (i == pos) std::cout << ">";
-            else std::cout << " ";
-        }
-        std::cout << "] " << int(progresso * 100.0) << " %\r";
-        std::cout.flush();
-    }
-
 
 public:
     static void inicializarArquivo() {
