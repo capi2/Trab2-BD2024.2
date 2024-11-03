@@ -94,9 +94,8 @@ public:
                 std::string missingLine;
                 if(!getline(file, missingLine)) {break;}
 
-                std::cout << "Inconsistence found\n" << std::endl;
-
-                std::cout << "currentLine: " << line << "\n" << "missingLine: " << missingLine << "\n" << "completeLine: " << line + missingLine << "\n" << std::endl;
+                //std::cout << "Inconsistence found\n" << std::endl;
+                //std::cout << "currentLine: " << line << "\n" << "missingLine: " << missingLine << "\n" << "completeLine: " << line + missingLine << "\n" << std::endl;
 
                 line = line + missingLine;
 
