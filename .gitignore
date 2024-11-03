@@ -3,3 +3,4 @@ run.ps1
 *.exe
 .vscode
 ArquivoDados.bin
+ArquivoMetaDados.bin

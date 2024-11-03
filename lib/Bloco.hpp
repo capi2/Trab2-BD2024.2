@@ -1,7 +1,7 @@
 #ifndef BLOCO_HPP
 #define BLOCO_HPP
 
-#include "registro.hpp"
+#include "Registro.hpp"
 #include <cstdlib>
 #include <cstdio>
 
