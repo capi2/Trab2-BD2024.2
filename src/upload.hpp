@@ -135,7 +135,7 @@ public:
             // i++;
         }
 
-        std::cout << std::endl << "Leitura arquivo csv completo!" << std::endl;
+        std::cout << std::endl << "Leitura arquivo CSV completo!" << std::endl;
 
         return 0;
     }
