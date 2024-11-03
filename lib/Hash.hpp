@@ -68,7 +68,7 @@ public:
         }
     }
 
-    static void inserir(const Registro& reg) {
+    static size_t inserir(const Registro& reg) {
         size_t indice = funcaoHash(reg.id);
         Bloco bloco = lerBloco(indice);
 
@@ -84,9 +84,12 @@ public:
             }
             metadados.totalRegistros++;
 
+            return indice;
+
         } else {
             // Colisão
             std::cout << "Aconteceu Colisão no Hash!\nID: " << reg.id << "\nindice: " << indice << "\n" << std::endl;
+            exit(1);
         }
     }
 

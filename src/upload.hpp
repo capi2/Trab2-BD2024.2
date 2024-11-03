@@ -6,6 +6,7 @@
 #include <string>
 #include <regex>
 #include "../lib/Hash.hpp"
+#include "../lib/BPTree1.hpp"
 
 class Reader {
 
@@ -112,12 +113,11 @@ public:
 
             Registro newRegistro = criarRegistro(id, titulo, ano, autores, citacoes, atualizacao, snippet);
 
-            TabelaHash::inserir(newRegistro);
+            size_t indiceBlocoEscrito;
 
+            indiceBlocoEscrito = TabelaHash::inserir(newRegistro);
 
-
-
-            
+            BPTree1::inserir(id, indiceBlocoEscrito);
 
             /*
             // Exibe os tokens

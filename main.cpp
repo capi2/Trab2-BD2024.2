@@ -12,13 +12,17 @@ int main() {
     // Fazer o menu
     TabelaHash::inicializarArquivo();
     MetaDadosManager::inicializarArquivo();
-    
-    Reader::uploadCSV(COMPLETO_CSV_PATH);
-    FindRec::buscaRegistro(3);
+    BPTree1::inicializarArquivo();
+
+    Reader::uploadCSV(CSV_PATH);
+    // FindRec::buscaRegistro(3);
+
+    Seek1::buscaRegistro(1);
 
     MetaDadosManager::imprimeMetaDados();
-
     MetaDadosManager::escreverMetaDados();
+
+    
 
     return 0;
 }

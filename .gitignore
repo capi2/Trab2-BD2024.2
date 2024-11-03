@@ -4,3 +4,5 @@ run.ps1
 .vscode
 ArquivoDados.bin
 ArquivoMetaDados.bin
+ArquivoIndicePrimario.bin
+ArquivoIndiceSecundario.bin
