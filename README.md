@@ -15,29 +15,32 @@ g++ main.cpp -o main
 
 ### Pastas
 
-- ```bd```:      pasta onde os arquivos binários serão criados após a leitura do ```arquivo.csv```
+- ```bd```:      pasta onde os arquivos binários serão criados após a leitura do ```arquivo.csv```.
 - ```data```:    pasta onde o ```arquivo.csv``` deve estar para ser lido!
--  ```lib```:    pasta onde as estruturas de dados e classes serão utilizadas no trabalho  
--  ```src```:    pasta onde as funções findrec, seek1, seek2 e upload estão implementadas
+-  ```lib```:    pasta onde as estruturas de dados e classes serão utilizadas no trabalho.
+-  ```src```:    pasta onde as funções findrec, seek1, seek2 e upload estão localizadas.
 
 ### Arquivos
 
-### Bloco.hpp
+####  Bloco.hpp
 
-Define a estrutura básica do bloco. O tamanho do bloco será de 4096 bytes 
+Define a estrutura básica do bloco. O tamanho do bloco será de 4096 bytes com 2 registros por bloco.
+
+#### BPTree1.hpp
+
+Define a estrutura da árvore B+ a ser utilizada como arquivo de índice primário. A árvore terá um M = 170.
 
 
+## Lista de funções e métodos
 
+| Função | O que faz? | Autor(es) |
 
+|  -----------------  |  -----------------  | ----------------- |
 
+| imprimeBloco() | Mostra o número de registros dentro do bloco e o conteúdo dos registros | Hugo,  André Valente, André Hirosaki |
 
+| February | $80 | qrewqereqr |
+ 
+| March | $420 | asdttrgt5g54 |
 
-### Lista de funções e métodos
-
-| Month    | Savings |
-| -------- | ------- |
-| January  | $250    |
-| February | $80     |
-| March    | $420    |
-
-- ```imprimeBloco(const Bloco& bloco)```: adasdasdadsa
+- ```imprimeBloco(const Bloco& bloco)```: Mostra o número de registros dentro do bloco e o conteúdo dos registros. 
