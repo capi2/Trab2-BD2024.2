@@ -30,12 +30,27 @@ Define a estrutura básica do bloco. O tamanho do bloco será de 4096 bytes com 
 
 Define a estrutura da árvore B+ a ser utilizada como arquivo de índice primário. A árvore terá um M = 170.
 
+### Lista de funções
 
-## Lista de funções e métodos
+- Bloco.hpp
 
-| a | b     | c     |
-|---|-------|-------|
-| 1 | asdas | 34345 |
-| 3 | gfebt | 1432  |
+  | Função         | O que faz?                                                              | Autores                             |
+|----------------|-------------------------------------------------------------------------|-------------------------------------|
+| imprimeBloco() | Mostra o número de registros dentro do bloco e o conteúdo dos registros | Hugo, André Valente, André Hirosaki |
 
-- ```imprimeBloco(const Bloco& bloco)```: Mostra o número de registros dentro do bloco e o conteúdo dos registros. 
+- BPTree1.hpp
+
+| Função               | O que faz?                                                                    | Autores                             |
+|----------------------|-------------------------------------------------------------------------------|-------------------------------------|
+| lerNo()              | Abre o arquivo de índice, procura o nó e retorna o mesmo                      | Hugo, André Valente, André Hirosaki |
+| escreverNo()         | Abre o arquivo de índice, procura o nó e escreve o mesmo                      | Hugo, André Valente, André Hirosaki |
+| novaRaiz()           | Aloca um novo nó raiz e configura os ponteiros das subárvores                 | Hugo, André Valente, André Hirosaki |
+| encontrarFolha()     | Função para encontrar o nó folha onde a chave deve ser inserida               | Hugo, André Valente, André Hirosaki |
+| inserirNaArvore()    | Função para inserir chave na árvore e ajustar a árvore                        | Hugo, André Valente, André Hirosaki |
+| dividirNoFolha()     | Caso dê um overflow em um nó folha, divide a mesma e configura os ponteiros   | Hugo, André Valente, André Hirosaki |
+| inserirNoInterno()   | Função para inserir chave em nó interno                                       | Hugo, André Valente, André Hirosaki |
+| dividirNoInterno()   | Caso dê um overflow em um nó interno, divide o mesmo e configura os ponteiros | Hugo, André Valente, André Hirosaki |
+| buscarRecursivo()    | Função recursiva para buscar a chave                                          | Hugo, André Valente, André Hirosaki |
+| inicializarArquivo() | Cria o arquivo de índice primário                                             | Hugo, André Valente, André Hirosaki |
+| inserir()            | Interface para inserir uma chave na árvore                                    | Hugo, André Valente, André Hirosaki |
+| buscaRegistro()      | Interface para buscar um registro na árvore                                   | Hugo, André Valente, André Hirosaki |
