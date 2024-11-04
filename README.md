@@ -34,4 +34,10 @@ Define a estrutura básica do bloco. O tamanho do bloco será de 4096 bytes
 
 ### Lista de funções e métodos
 
+| Month    | Savings |
+| -------- | ------- |
+| January  | $250    |
+| February | $80     |
+| March    | $420    |
+
 - ```imprimeBloco(const Bloco& bloco)```: adasdasdadsa
