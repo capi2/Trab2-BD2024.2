@@ -189,12 +189,12 @@ class BPTree1 {
                 int i = no.numChaves - 1;
                 while(i >= 0 && chave < no.chaves[i]) {
                     no.chaves[i + 1] = no.chaves[i];
-                    no.ponteiro[i + 1] = no.ponteiro[i];
+                    no.ponteiro[i + 2] = no.ponteiro[i + 1];
                     i--;
                 }
                 no.chaves[i + 1] = chave;
-                no.ponteiro[i + 1] = indiceDireita;
-                no.numChaves++;
+                no.ponteiro[i + 2] = indiceDireita;
+                no.numChaves++; 
 
                 escreverNo(indiceNo, no);
                 return;
