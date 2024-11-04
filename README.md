@@ -24,5 +24,14 @@ g++ main.cpp -o main
 
 ### Bloco.hpp
 
-adadaasddasd
+Define a estrutura básica do bloco. O tamanho do bloco será de 4096 bytes 
 
+
+
+
+
+
+
+### Lista de funções e métodos
+
+- ```imprimeBloco(const Bloco& bloco)```: adasdasdadsa
