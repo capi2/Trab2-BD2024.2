@@ -2,7 +2,6 @@
 #define TABELA_HASH_HPP
 
 #include <string>
-#include <vector>
 #include <fstream>
 #include <iostream>
 #include "Registro.hpp"

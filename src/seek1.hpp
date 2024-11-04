@@ -36,16 +36,22 @@ class Seek1 {
 
     public:
         static void buscaRegistro(int id) {
-            size_t indiceBloco = BPTree1::buscar(id);
+            std::cout << "\nBuscando Registro de ID: " << id << "..." << std::endl;
+            size_t indiceBloco = BPTree1::buscaRegistro(id);
+            
+            if(indiceBloco == -1) {
+                std::cout << "Registro não encontrado na arvore primária" << std::endl;
+                return;
+            } 
 
             Registro* reg = lerRegistro(indiceBloco, id);
 
             if(!reg) {
-                std::cout << "Registro não encontrado!" << std::endl;
+                std::cout << " ===== Registro não encontrado! =====\n" << std::endl;
             } else {
                 std::cout << "===== Registro Encontrado =====" << std::endl;
                 imprimeRegistro(*reg);
-                std::cout << "===== Registro Encontrado =====" << std::endl;
+                std::cout << "===== Registro Encontrado =====\n" << std::endl;
             }
 
 

@@ -17,7 +17,7 @@ int main() {
     Reader::uploadCSV(CSV_PATH);
     // FindRec::buscaRegistro(3);
 
-    Seek1::buscaRegistro(1);
+    Seek1::buscaRegistro(956);
 
     MetaDadosManager::imprimeMetaDados();
     MetaDadosManager::escreverMetaDados();

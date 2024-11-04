@@ -15,6 +15,8 @@ struct MetaDados {
     size_t blocosLidosUtimaConsultaIndicePrimario;
     size_t totalBlocosIndiceSecundario;
     size_t blocosLidosUtimaConsultaIndiceSecundario;
+    size_t indiceRaizPrimario;
+    size_t indiceRaizSecundario;
 
     MetaDados() {
         totalBlocos = 0;
@@ -25,6 +27,8 @@ struct MetaDados {
         blocosLidosUtimaConsultaIndicePrimario = 0;
         totalBlocosIndiceSecundario = 0;
         blocosLidosUtimaConsultaIndiceSecundario = 0;
+        indiceRaizPrimario = 0;
+        indiceRaizSecundario = 0;
     }
 };
 
@@ -76,6 +80,9 @@ class MetaDadosManager {
 
         static void imprimeMetaDados() {
 
+
+
+            std::cout << "\n ===== METADADOS ===== " << std::endl;
             std::cout << "Total de blocos no arquivo de dados: " << metadados.totalBlocos << std::endl;
             std::cout << "Total de Registros: " << metadados.totalRegistros << std::endl;
             std::cout << "Total de Blocos Ocupados (pelo menos 1 registro): " << metadados.blocosUsados << std::endl;
@@ -84,6 +91,12 @@ class MetaDadosManager {
             std::cout << "Blocos Lidos na última consulta ao Índice Primário: " << metadados.blocosLidosUtimaConsultaIndicePrimario << std::endl;
             std::cout << "Total de Blocos Índice Secundário: " << metadados.totalBlocosIndiceSecundario << std::endl;
             std::cout << "Blocos Lidos na última consulta ao Índice Secundário: " << metadados.blocosLidosUtimaConsultaIndiceSecundario << std::endl;
+            std::cout << "Indice Raiz Primário: " << metadados.indiceRaizPrimario << std::endl;
+            std::cout << "Indice Raiz Secundário: " << metadados.indiceRaizSecundario << std::endl;
+
+
+
+            std::cout << " ===== METADADOS ===== \n" << std::endl;
 
 
 
