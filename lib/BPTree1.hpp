@@ -21,6 +21,16 @@ struct No1 {
     }
 };
 
+struct NoCaminho {
+    size_t indiceNo;
+    No1 no;
+
+    NoCaminho() {
+        indiceNo = -1;
+    }
+
+};
+
 size_t proximoIndice = 1; // Começa em 1 porque 0 é usado para a raiz
 
 class BPTree1 {
@@ -68,9 +78,12 @@ class BPTree1 {
         }
 
         // Função para encontrar o nó folha onde a chave deve ser inserida
-        static size_t encontrarFolha(int chave, size_t indiceAtual, std::vector<size_t>& caminho) {
+        static size_t encontrarFolha(int chave, size_t indiceAtual, std::vector<NoCaminho>& caminho) {
             No1 noAtual = lerNo(indiceAtual);
-            caminho.push_back(indiceAtual);
+            NoCaminho noCaminho;
+            noCaminho.indiceNo = indiceAtual;
+            noCaminho.no = noAtual;
+            caminho.push_back(noCaminho);
 
             if(noAtual.folha) {
                 return indiceAtual;
@@ -86,10 +99,13 @@ class BPTree1 {
         }
 
         // Função para inserir chave na árvore e ajustar a árvore
-        static void inserirNaArvore(int chave, size_t indiceBloco, std::vector<size_t>& caminho) {
+        static void inserirNaArvore(int chave, size_t indiceBloco, std::vector<NoCaminho>& caminho) {
             // Obter o nó folha
-            size_t indiceNo = caminho.back();
-            No1 no = lerNo(indiceNo);
+            NoCaminho noCaminho = caminho.back();
+            size_t indiceNo = noCaminho.indiceNo;
+            No1 no = noCaminho.no;
+
+
 
             // Inserir chave no nó
 
@@ -114,9 +130,10 @@ class BPTree1 {
             }
         }
 
-        static void dividirNoFolha(int chave, size_t indiceBloco, std::vector<size_t>& caminho) {
-            size_t indiceNo = caminho.back();
-            No1 no = lerNo(indiceNo);
+        static void dividirNoFolha(int chave, size_t indiceBloco, std::vector<NoCaminho>& caminho) {
+            NoCaminho noCaminho = caminho.back();
+            size_t indiceNo = noCaminho.indiceNo;
+            No1 no = noCaminho.no;
 
             // Vetor auxiliar
             int chavesAuxiliar[2*M + 1];
@@ -176,9 +193,10 @@ class BPTree1 {
         }
 
         // Função para inserir chave em nó interno
-        static void inserirNoInterno(int chave, std::vector<size_t>& caminho, size_t indiceDireita) {
-            size_t indiceNo = caminho.back(); 
-            No1 no = lerNo(indiceNo);
+        static void inserirNoInterno(int chave, std::vector<NoCaminho>& caminho, size_t indiceDireita) {
+            NoCaminho noCaminho = caminho.back();
+            size_t indiceNo = noCaminho.indiceNo;
+            No1 no = noCaminho.no;
 
             // Encontrar posição para inserir a chave
             if(no.numChaves == 2 * M) {
@@ -202,9 +220,10 @@ class BPTree1 {
             }
         }
 
-        static void dividirNoInterno(int chave, size_t indiceNo, std::vector<size_t>& caminho) {
-            size_t indiceNoAtual = caminho.back();
-            No1 no = lerNo(indiceNoAtual);
+        static void dividirNoInterno(int chave, size_t indiceNo, std::vector<NoCaminho>& caminho) {
+            NoCaminho noCaminho = caminho.back();
+            size_t indiceNoAtual = noCaminho.indiceNo;
+            No1 no = noCaminho.no;
 
             caminho.pop_back();
 
@@ -320,7 +339,7 @@ class BPTree1 {
         }
 
         static void inserir(int chave, size_t indiceBloco) {
-            std::vector<size_t> caminho;
+            std::vector<NoCaminho> caminho;
             size_t indiceFolha = encontrarFolha(chave, metadados.indiceRaizPrimario, caminho);
 
             inserirNaArvore(chave, indiceBloco, caminho);

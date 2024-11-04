@@ -35,19 +35,42 @@ Registro criarRegistro(int id, const char* titulo, int ano, const char* autores,
     return reg;
 }
 
+void sanitizeString(char* str) {
+    for (int i = 0; str[i] != '\0'; ++i) {
+        if (!std::isprint(static_cast<unsigned char>(str[i]))) { // Faz caracter especial virar 0
+            str[i] = '0';
+        }
+    }
+}
+
 void imprimeRegistro(const Registro& reg) {
     // Converte a data de atualização para um formato legível
     char buffer[100];
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&reg.atualizacao));
 
+     char titulo[301];
+    char autores[151];
+    char snippet[1025];
+    
+    std::strncpy(titulo, reg.titulo, 300);
+    titulo[300] = '\0';
+    std::strncpy(autores, reg.autores, 150);
+    autores[150] = '\0';
+    std::strncpy(snippet, reg.snippet, 1024);
+    snippet[1024] = '\0';
+
+    sanitizeString(titulo);
+    sanitizeString(autores);
+    sanitizeString(snippet);    
+
     // Imprime os detalhes do registro
     std::cout << "ID: " << reg.id << std::endl;
-    std::cout << "Título: " << reg.titulo << std::endl;
+    std::cout << "Título: " << titulo << std::endl;
     std::cout << "Ano: " << reg.ano << std::endl;
-    std::cout << "Autores: " << reg.autores << std::endl;
+    std::cout << "Autores: " << autores << std::endl;
     std::cout << "Citações: " << reg.citacoes << std::endl;
     std::cout << "Atualização: " << buffer << std::endl;
-    std::cout << "Snippet: " << reg.snippet << std::endl;
+    std::cout << "Snippet: " << snippet << std::endl;
 }
 
 #endif // REGISTRO_HPP
