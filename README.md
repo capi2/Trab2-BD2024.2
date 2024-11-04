@@ -33,14 +33,9 @@ Define a estrutura da árvore B+ a ser utilizada como arquivo de índice primár
 
 ## Lista de funções e métodos
 
-| Função | O que faz? | Autor(es) |
-
-|  -----------------  |  -----------------  | ----------------- |
-
-| imprimeBloco() | Mostra o número de registros dentro do bloco e o conteúdo dos registros | Hugo,  André Valente, André Hirosaki |
-
-| February | $80 | qrewqereqr |
- 
-| March | $420 | asdttrgt5g54 |
+| a | b     | c     |
+|---|-------|-------|
+| 1 | asdas | 34345 |
+| 3 | gfebt | 1432  |
 
 - ```imprimeBloco(const Bloco& bloco)```: Mostra o número de registros dentro do bloco e o conteúdo dos registros. 
