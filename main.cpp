@@ -43,10 +43,16 @@ int main() {
     BPTree1::inicializarArquivo();
     BPTree2::inicializarArquivo();
 
-    Reader::uploadCSV(CSV_PATH);
+    metadados.arquivoCSVLido = true;
+
+    Reader::uploadCSV(COMPLETO_CSV_PATH);
+
+    Seek1::buscaRegistro(1549146);
 
     MetaDadosManager::imprimeMetaDados();
     MetaDadosManager::escreverMetaDados();
+
+
 
     
 

@@ -67,6 +67,7 @@ private:
         time_t atualizacao = static_cast<time_t>(std::stol(tokens[5]));
         const char* snippet = tokens[6].c_str();
 
+
         Registro newRegistro = criarRegistro(id, titulo, ano, autores, citacoes, atualizacao, snippet);
 
         size_t indiceBlocoEscrito;
@@ -76,6 +77,7 @@ private:
 
         char tempTitulo[301];
         strcpy(tempTitulo, titulo);
+        sanitizeString(tempTitulo);
         BPTree2::inserir(tempTitulo, indiceBlocoEscrito);
     }
 
@@ -135,19 +137,19 @@ public:
                 tokens = extractTokens(line);
             }
 
-            insereRegistroNosArquivos(tokens);
+            //insereRegistroNosArquivos(tokens);
 
-            // int id = std::stoi(tokens[0]);
-            // if(!BPTree1::buscaRegistro(id)) {
-            //     std::cout << "Não achei na avore BPTree1: " << id << std::endl;
-            // }
+            int id = std::stoi(tokens[0]);
+            if(!BPTree1::buscaRegistro(id)) {
+                std::cout << "Não achei na avore BPTree1: " << id << std::endl;
+            }
 
-            // const char* titulo = tokens[1].c_str();
-            // char tempTitulo[301];
-            // strcpy(tempTitulo, titulo);
-            // if(!BPTree2::buscaRegistro(tempTitulo)) {
-            //     std::cout << "Não achei na avore BPTree2: " << tempTitulo << std::endl;
-            // }
+             const char* titulo = tokens[1].c_str();
+             char tempTitulo[301];
+             strcpy(tempTitulo, titulo);
+             if(!BPTree2::buscaRegistro(tempTitulo)) {
+                 std::cout << "Não achei na avore BPTree2: " << tempTitulo << std::endl;
+             }
 
 
 

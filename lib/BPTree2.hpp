@@ -243,11 +243,7 @@ class BPTree2 {
             size_t indiceNoAtual = noCaminho.indiceNo;
             No2 no = noCaminho.no;
 
-            std::cout << "Antes de quebrar o no" << std::endl;
-            for(int i = 0; i < no.numChaves; i++) {
-                std::cout << indiceNoAtual <<" Folha[" << no.folha << "] [" << i + 1 << "/" << no.numChaves  << "] | " << no.chaves[i] << " | " << no.ponteiro[i] << std::endl;
-            } std::cout << no.ponteiro[2*M2] << std::endl;
-
+            
             // Vetor auxiliar
             char chavesAuxiliar[2*M2 + 1][301];
             size_t ponteirosAuxiliar[2*M2 + 2];
@@ -271,10 +267,7 @@ class BPTree2 {
                 i++;
             }
 
-            std::cout << "Auxiliar" << std::endl;
-            for(int i = 0; i < 2*M2 + 1; i++) {
-                std::cout << chavesAuxiliar[i] << " | " << ponteirosAuxiliar[i] << std::endl;
-            } std::cout << ponteirosAuxiliar[2*M2+1];
+            
 
             // Vetor auxiliar
 
@@ -305,15 +298,7 @@ class BPTree2 {
 
             size_t novoIndiceNo = proximoIndice2++;
 
-            std::cout << "Depois de quebrar o no" << std::endl;
-            for(int i = 0; i < no.numChaves; i++) {
-                std::cout << indiceNoAtual <<" Folha[" << no.folha << "] [" << i + 1 << "/" << no.numChaves  << "] | " << no.chaves[i] << " | " << no.ponteiro[i] << std::endl;
-            } std::cout << no.ponteiro[2*M2] << std::endl;
-
-            std::cout << "Novo no" << std::endl;
-            for(int i = 0; i < novoNo.numChaves; i++) {
-                std::cout << novoIndiceNo <<" Folha[" << novoNo.folha << "] [" << i + 1 << "/" << novoNo.numChaves  << "] | " << novoNo.chaves[i] << " | " << novoNo.ponteiro[i] << std::endl;
-            } std::cout << novoNo.ponteiro[novoNo.numChaves] << std::endl;
+        
 
 
 
@@ -325,7 +310,6 @@ class BPTree2 {
 
             if(caminho.empty()) {
                 // Criar novo nó raiz
-                std::cout << "indo para raiz" << std::endl;
                 novaRaiz(indiceNoAtual, novoIndiceNo, chaveMediana);
             } else {
                 // Inserir chave mediana no nó pai
