@@ -44,6 +44,8 @@ int main() {
             Reader::uploadCSV(COMPLETO_CSV_PATH);
             std::cout << std::endl;
 
+            
+
             break;
 
         case 1:
@@ -84,6 +86,7 @@ int main() {
 
             break;
         case -1:
+            MetaDadosManager::escreverMetaDados();
             exit(0);
 
             break;
@@ -94,11 +97,7 @@ int main() {
 
     }
 
-
-    //Reader::uploadCSV(COMPLETO_CSV_PATH)
-
-    // MetaDadosManager::imprimeMetaDados();
-    // MetaDadosManager::escreverMetaDados();
+    MetaDadosManager::escreverMetaDados();
 
 
     return 0;
