@@ -137,20 +137,7 @@ public:
                 tokens = extractTokens(line);
             }
 
-            //insereRegistroNosArquivos(tokens);
-
-            int id = std::stoi(tokens[0]);
-            if(!BPTree1::buscaRegistro(id)) {
-                std::cout << "Não achei na avore BPTree1: " << id << std::endl;
-            }
-
-             const char* titulo = tokens[1].c_str();
-             char tempTitulo[301];
-             strcpy(tempTitulo, titulo);
-             if(!BPTree2::buscaRegistro(tempTitulo)) {
-                 std::cout << "Não achei na avore BPTree2: " << tempTitulo << std::endl;
-             }
-
+            insereRegistroNosArquivos(tokens);
 
 
         }
