@@ -40,7 +40,7 @@ class Seek1 {
             size_t indiceBloco = BPTree1::buscaRegistro(id);
             
             if(indiceBloco == -1) {
-                std::cout << "Registro não encontrado na arvore primária" << std::endl;
+                std::cout << "Registro não encontrado na árvore primária" << std::endl;
                 return;
             } 
 
@@ -49,9 +49,9 @@ class Seek1 {
             if(!reg) {
                 std::cout << " ===== Registro não encontrado! =====\n" << std::endl;
             } else {
-                std::cout << "===== Registro Encontrado =====" << std::endl;
+                std::cout << "===== Registro Encontrado | Blocos Lidos: " << metadados.blocosLidosUtimaConsultaIndicePrimario << " | Blocos Indice Primário: " << metadados.totalBlocosIndicePrimario << " =====" << std::endl;
                 imprimeRegistro(*reg);
-                std::cout << "===== Registro Encontrado =====\n" << std::endl;
+                std::cout << "===== Registro Encontrado | Blocos Lidos: " << metadados.blocosLidosUtimaConsultaIndicePrimario << " | Blocos Indice Primário: " << metadados.totalBlocosIndicePrimario << " =====" << std::endl;
             }
 
 

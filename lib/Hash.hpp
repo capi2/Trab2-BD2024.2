@@ -8,7 +8,7 @@
 #include "Bloco.hpp"
 #include "MetaDados.hpp"
 
-const size_t TAMANHO_TABELA_HASH = (TOTAL_MAXIMO_REGISTROS + 1)/MAX_REG_BLOCO; // O define da erro! overflow
+const size_t TAMANHO_TABELA_HASH = (TOTAL_MAXIMO_REGISTROS + 1)/MAX_REG_BLOCO; // Usar define aqui dá erro devido overflow, por isso é necessário declarar um size_t
 
 #define ARQUIVO_DADOS "bd/ArquivoDados.bin"
 
@@ -16,7 +16,6 @@ class TabelaHash {
 private:
 
     static size_t funcaoHash(int id) {
-        //std::cout << id << " % " << TAMANHO_TABELA_HASH << " = " << id % TAMANHO_TABELA_HASH << std::endl;
         return id % TAMANHO_TABELA_HASH;
     }
 
@@ -46,7 +45,6 @@ private:
         arquivo.close();
     }
 
-
 public:
     static void inicializarArquivo() {
         std::fstream arquivo(ARQUIVO_DADOS, std::ios::in | std::ios::binary);
@@ -71,8 +69,6 @@ public:
         size_t indice = funcaoHash(reg.id);
         Bloco bloco = lerBloco(indice);
 
-        //std::cout << "ID: " << reg.id << "\nindice: " << indice << "\n" << std::endl;
-
         if (bloco.numRegistros < MAX_REG_BLOCO) {
             // Espaço disponível no bloco principal
             bloco.registros[bloco.numRegistros++] = reg;
@@ -87,7 +83,7 @@ public:
 
         } else {
             // Colisão
-            std::cout << "Aconteceu Colisão no Hash!\nID: " << reg.id << "\nindice: " << indice << "\n" << std::endl;
+            std::cout << "Aconteceu Colisão no Hash, era pra ser perfeito :( !\nID: " << reg.id << "\nindice: " << indice << "\n" << std::endl;
             exit(1);
         }
     }

@@ -46,7 +46,7 @@ class Seek2 {
             size_t indiceBloco = BPTree2::buscaRegistro(titulo);
             
             if(indiceBloco == -1) {
-                std::cout << "Registro não encontrado na arvore secundária" << std::endl;
+                std::cout << "Registro não encontrado na árvore secundária" << std::endl;
                 return;
             } 
 
@@ -55,9 +55,9 @@ class Seek2 {
             if(!reg) {
                 std::cout << " ===== Registro não encontrado! =====\n" << std::endl;
             } else {
-                std::cout << "===== Registro Encontrado =====" << std::endl;
+                std::cout << "===== Registro Encontrado | Blocos Lidos: " << metadados.blocosLidosUtimaConsultaIndiceSecundario << " | Blocos Indice Secundário: " << metadados.totalBlocosIndiceSecundario << " =====" << std::endl;
                 imprimeRegistro(*reg);
-                std::cout << "===== Registro Encontrado =====\n" << std::endl;
+                std::cout << "===== Registro Encontrado | Blocos Lidos: " << metadados.blocosLidosUtimaConsultaIndiceSecundario << " | Blocos Indice Secundário: " << metadados.totalBlocosIndiceSecundario << " =====" << std::endl;
             }
 
 

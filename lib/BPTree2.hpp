@@ -15,13 +15,13 @@ struct No2 {
     size_t ponteiro[2*M2 + 1];
     bool folha;
     unsigned short int numChaves;
-    char padding[4096 - ((2*M2*301) + 8*(2*M2 + 1) + 1 + 2 + 8)];// 8?
+    char padding[4096 - ((2*M2*301) + 8*(2*M2 + 1) + 1 + 2 + 8)]; // ocupar todo o 4096 para poder usar o size_of
 
     No2() {
         folha = true;
         numChaves = 0;
-        memset(chaves, 0, sizeof(chaves));
-        memset(ponteiro, 0, sizeof(ponteiro));
+        memset(chaves, 0, sizeof(chaves)); // Preenche os espaços vazio com 0
+        memset(ponteiro, 0, sizeof(ponteiro)); // Preenche os espaços vazio com 0
     }
 };
 
@@ -70,16 +70,13 @@ class BPTree2 {
             No2 novaRaiz;
             novaRaiz.folha = false;
             novaRaiz.numChaves = 1;
-            // Zerar os caracteres
 
             strcpy(novaRaiz.chaves[0], chaveMediana);
-
 
             novaRaiz.ponteiro[0] = indiceNo;
             novaRaiz.ponteiro[1] = novoIndiceNo;
 
             metadados.indiceRaizSecundario = proximoIndice2;
-            //std::cout << "Escrevi Nova Raiz no indice: " << proximoIndice2 << std::endl;
             escreverNo(proximoIndice2++, novaRaiz);
             metadados.totalBlocosIndiceSecundario++;
 
@@ -113,17 +110,13 @@ class BPTree2 {
             size_t indiceNo = noCaminho.indiceNo;
             No2 no = noCaminho.no;
 
-
-
             // Inserir chave no nó
-
             if(no.numChaves == 2 * M2) {
                 // Nó excedeu a capacidade, precisa dividir
-                //std::cout << "Folha " << indiceNo << " lotada!";
                 dividirNoFolha(chave, indiceBloco, caminho);
             } else {
 
-                int i = no.numChaves - 1; //erro ta aqui
+                int i = no.numChaves - 1;
                 while(i >= 0 && strcmp(chave, no.chaves[i]) < 0) {
                     strcpy(no.chaves[i + 1], no.chaves[i]);
                     no.ponteiro[i + 1] = no.ponteiro[i];
@@ -164,9 +157,8 @@ class BPTree2 {
                 ponteirosAuxiliar[i] = no.ponteiro[i - 1];
                 i++;
             }
-            // Vetor auxiliar
 
-
+            // Criar novo Nó
             No2 novoNo;
             novoNo.folha = true;
             novoNo.numChaves = M2 + 1; // Pega metade
@@ -178,7 +170,7 @@ class BPTree2 {
             }
 
             no.numChaves = M2;
-            // Copiar metade das chaves e ponteiros para o nó atual
+            // Copiar primeira metade das chaves e ponteiros para o nó atual
             for(int i = 0; i < no.numChaves; i++) {
                 strcpy(no.chaves[i], chavesAuxiliar[i]);
                 no.ponteiro[i] = ponteirosAuxiliar[i];
@@ -203,7 +195,6 @@ class BPTree2 {
                 novaRaiz(indiceNo, novoIndiceNo, chaveMediana);
             } else {
                 // Inserir chave mediana no nó pai
-                //std::cout << "Folha dividida joguei chave: " << chaveMediana << std::endl; 
                 inserirNoInterno(chaveMediana, caminho, novoIndiceNo);
             }
         }
@@ -225,13 +216,12 @@ class BPTree2 {
                     strcpy(no.chaves[i + 1], no.chaves[i]);
                     no.ponteiro[i + 2] = no.ponteiro[i + 1];
                     i--;
-                } // se for o ultimo?
+                }
 
                 strcpy(no.chaves[i + 1], chave);
                 no.ponteiro[i + 2] = indiceDireita;
                 no.numChaves++; 
 
-                //std::cout << "Inseri chave" << std::endl;
                 escreverNo(indiceNo, no);
                 return;
             
@@ -242,7 +232,6 @@ class BPTree2 {
             No2Caminho noCaminho = caminho.back();
             size_t indiceNoAtual = noCaminho.indiceNo;
             No2 no = noCaminho.no;
-
             
             // Vetor auxiliar
             char chavesAuxiliar[2*M2 + 1][301];
@@ -267,15 +256,12 @@ class BPTree2 {
                 i++;
             }
 
-            
-
-            // Vetor auxiliar
-
+            // Criar novo Nó
             No2 novoNo;
             novoNo.folha = false;
             novoNo.numChaves = M2; // Pega metade
 
-            // Copiar metade das chaves e ponteiros para o novo nó
+            // Copiar segunda metade + 1 das chaves e ponteiros para o novo nó
             for(int i = 0; i < novoNo.numChaves; i++) {
                 strcpy(novoNo.chaves[i], chavesAuxiliar[M2 + i + 1]);
                 novoNo.ponteiro[i] = ponteirosAuxiliar[M2 + i + 1];
@@ -283,9 +269,8 @@ class BPTree2 {
 
             novoNo.ponteiro[novoNo.numChaves] = ponteirosAuxiliar[2*M2 + 1];
 
-
+            // Copiar primeira metade das chaves e ponteiros para o nó atual
             no.numChaves = M2;
-
             for(int i = 0; i < no.numChaves; i++) {
                 strcpy(no.chaves[i], chavesAuxiliar[i]);
                 no.ponteiro[i] = ponteirosAuxiliar[i];
@@ -298,10 +283,7 @@ class BPTree2 {
 
             size_t novoIndiceNo = proximoIndice2++;
 
-        
-
-
-
+            // Escreve nós no disco
             escreverNo(indiceNoAtual, no);
             escreverNo(novoIndiceNo, novoNo);
             metadados.totalBlocosIndiceSecundario++;
@@ -313,7 +295,6 @@ class BPTree2 {
                 novaRaiz(indiceNoAtual, novoIndiceNo, chaveMediana);
             } else {
                 // Inserir chave mediana no nó pai
-                //std::cout << "Nó dividido joguei chave: " << chaveMediana << std::endl;
                 inserirNoInterno(chaveMediana, caminho, novoIndiceNo);
             }
         }
@@ -322,15 +303,11 @@ class BPTree2 {
         static size_t buscarRecursivo(char* chave, size_t indiceAtual) {
             No2 noAtual = lerNo(indiceAtual);
 
-            //std::cout << "Lendo No de indice " << indiceAtual << std::endl;
-
             metadados.blocosLidosUtimaConsultaIndiceSecundario++;
 
             if(noAtual.folha) {
-                //std::cout << "Indice folha:  " << indiceAtual << std::endl;
                 // Procurar a chave no nó folha
                 for(int i = 0; i < noAtual.numChaves; i++) {
-                    //std::cout << indiceAtual << " Folha [" << i + 1 << "/" << noAtual.numChaves  << "] | " << noAtual.chaves[i] << "==" << chave << std::endl;
                     if(strcmp(noAtual.chaves[i], chave) == 0) {
                         return noAtual.ponteiro[i]; // Retorna o ponteiro associado
                     }
@@ -339,15 +316,11 @@ class BPTree2 {
                 return size_t(-1);
             } else {
                 // Nó interno: determinar qual filho seguir
-                //std::cout << indiceAtual <<" | ";
                 int i = 0;
                 while(i < noAtual.numChaves && strcmp(chave, noAtual.chaves[i]) >= 0) {
                     i++;
                 }
 
-                //std::cout << noAtual.chaves[0] << " | " << noAtual.ponteiro[i] << std::endl;
-
-                // std::cout << "Lendo No de indice " << indiceAtual << std::endl;
                 // Chamar recursivamente para o filho apropriado
                 return buscarRecursivo(chave, noAtual.ponteiro[i]);
             }
@@ -375,6 +348,7 @@ class BPTree2 {
             }
         }
 
+        // Insere Registro na árvore
         static void inserir(char* chave, size_t indiceBloco) {
             std::vector<No2Caminho> caminho;
             size_t indiceFolha = encontrarFolha(chave, metadados.indiceRaizSecundario, caminho);
@@ -382,23 +356,10 @@ class BPTree2 {
             inserirNaArvore(chave, indiceBloco, caminho);
         }
 
+        // Busca Registro na árvore recursivamente
         static size_t buscaRegistro(char* chave) {
             metadados.blocosLidosUtimaConsultaIndiceSecundario = 0;
             return buscarRecursivo(chave, metadados.indiceRaizSecundario);
-        }
-
-        static No2 lerNoTeste(size_t indice) {
-            std::ifstream arquivo(ARQUIVO_INDICE_SECUNDARIO, std::ios::in | std::ios::binary);
-            if(!arquivo) {
-                std::cout << "Não consigo ler No2 porque arquivo de indice primário não existe! Verifique se o diretório bd existe" << std::endl;
-                exit(1);
-            }
-            arquivo.seekg(indice * sizeof(No2), std::ios::beg);
-            No2 no;
-
-            arquivo.read(reinterpret_cast<char*>(&no), sizeof(No2));
-            arquivo.close();
-            return no;
         }
 
 };

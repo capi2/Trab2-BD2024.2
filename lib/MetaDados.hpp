@@ -6,7 +6,7 @@
 
 #define ARQUIVO_METADADOS "bd/ArquivoMetaDados.bin"
 
-struct MetaDados {
+struct MetaDados { // Informações sobre o metadados
     size_t totalBlocos;
     size_t totalRegistros;
     size_t blocosUsados;
@@ -44,8 +44,7 @@ class MetaDadosManager {
         static void lerMetaDados() {
             std::ifstream arquivo(ARQUIVO_METADADOS, std::ios::in | std::ios::binary);
             if(!arquivo) {
-                std::cout << "Não consigo ler metadados porque arquivo de dados não existe! Verifique se o diretório bd existe" << std::endl;
-                exit(1);
+                std::cout << "Não consigo ler metadados porque arquivo de dados não existe! Verifique se o diretório bd existe ou se não fez upload ainda!" << std::endl;
             }
 
             arquivo.read(reinterpret_cast<char*>(&metadados), sizeof(MetaDados));
@@ -57,11 +56,10 @@ class MetaDadosManager {
 
             if (!arquivo) {
                 std::cout << "Criando Arquivo de metadados!" << std::endl;
-                // Arquivo não existe, criar e pré-alocar espaço
                 arquivo.open(ARQUIVO_METADADOS, std::ios::out | std::ios::binary);
                 MetaDados metaDadosVazio;
 
-                // Escrever MetaDados vazios
+                // Escrever MetaDados vazio
                 arquivo.write(reinterpret_cast<const char*>(&metaDadosVazio), sizeof(MetaDados));
                 arquivo.close();
             } else {
@@ -82,8 +80,6 @@ class MetaDadosManager {
 
         static void imprimeMetaDados() {
 
-
-
             std::cout << "\n ===== METADADOS ===== " << std::endl;
             std::cout << "Total de blocos no arquivo de dados: " << metadados.totalBlocos << std::endl;
             std::cout << "Total de Registros: " << metadados.totalRegistros << std::endl;
@@ -96,11 +92,7 @@ class MetaDadosManager {
             std::cout << "Indice Raiz Primário: " << metadados.indiceRaizPrimario << std::endl;
             std::cout << "Indice Raiz Secundário: " << metadados.indiceRaizSecundario << std::endl;
             std::cout << "Arquivo csv lido: " << metadados.arquivoCSVLido << std::endl;
-
-
             std::cout << " ===== METADADOS ===== \n" << std::endl;
-
-
 
         }
 };

@@ -6,9 +6,8 @@
 #include <cstring>
 #include <iomanip>
 
-#define TOTAL_MAXIMO_REGISTROS 1549146
+#define TOTAL_MAXIMO_REGISTROS 1549146 // Número usado para fazer hash perfeito
 
-// Definição da estrutura Registro
 struct Registro {
     int id;
     char titulo[301];
@@ -19,7 +18,6 @@ struct Registro {
     char snippet[1025];
 };
 
-// Função para criar um novo registro
 Registro criarRegistro(int id, const char* titulo, int ano, const char* autores, int citacoes, time_t atualizacao, const char* snippet) {
     Registro reg;
     reg.id = id;
@@ -37,7 +35,7 @@ Registro criarRegistro(int id, const char* titulo, int ano, const char* autores,
 
 void sanitizeString(char* str) {
     for (int i = 0; str[i] != '\0'; ++i) {
-        if (!std::isprint(static_cast<unsigned char>(str[i]))) { // Faz caracter especial virar 0
+        if (!std::isprint(static_cast<unsigned char>(str[i]))) { // Faz caracter especial virar ' ' para poder usar strcmp sem da seg fault
             str[i] = ' ';
         }
     }

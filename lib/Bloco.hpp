@@ -6,7 +6,7 @@
 #include <cstdio>
 
 #define MAX_REG_BLOCO 2  // Número de registros por bloco
-#define TAMANHO_BLOCO 4096
+#define TAMANHO_BLOCO 4096 // Tamanho do Bloco
 
 struct Bloco {
     Registro registros[MAX_REG_BLOCO];
