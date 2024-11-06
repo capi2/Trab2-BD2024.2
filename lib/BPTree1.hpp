@@ -7,7 +7,7 @@
 #include "MetaDados.hpp"
 
 #define ARQUIVO_INDICE_PRIMARIO "bd/ArquivoIndicePrimario.bin"
-#define M  170 //170 //2m x 4 + (2m+1) x 8 ≤ 4096
+#define M  170 //2m x 4 + (2m+1) x 8 ≤ 4096
 
 struct No1 {
     int chaves[2*M];
@@ -21,17 +21,17 @@ struct No1 {
     }
 };
 
-struct NoCaminho {
+struct No1Caminho {
     size_t indiceNo;
     No1 no;
 
-    NoCaminho() {
+    No1Caminho() {
         indiceNo = -1;
     }
 
 };
 
-size_t proximoIndice = 1; // Começa em 1 porque 0 é usado para a raiz
+size_t proximoIndice1 = 1; // Começa em 1 porque 0 é usado para a raiz
 
 class BPTree1 {
     private:
@@ -70,17 +70,17 @@ class BPTree1 {
             novaRaiz.ponteiro[0] = indiceNo;
             novaRaiz.ponteiro[1] = novoIndiceNo;
 
-            metadados.indiceRaizPrimario = proximoIndice;
-            //std::cout << "Escrevi Nova Raiz no indice: " << proximoIndice << std::endl;
-            escreverNo(proximoIndice++, novaRaiz);
+            metadados.indiceRaizPrimario = proximoIndice1;
+            //std::cout << "Escrevi Nova Raiz no indice: " << proximoIndice1 << std::endl;
+            escreverNo(proximoIndice1++, novaRaiz);
             metadados.totalBlocosIndicePrimario++;
 
         }
 
         // Função para encontrar o nó folha onde a chave deve ser inserida
-        static size_t encontrarFolha(int chave, size_t indiceAtual, std::vector<NoCaminho>& caminho) {
+        static size_t encontrarFolha(int chave, size_t indiceAtual, std::vector<No1Caminho>& caminho) {
             No1 noAtual = lerNo(indiceAtual);
-            NoCaminho noCaminho;
+            No1Caminho noCaminho;
             noCaminho.indiceNo = indiceAtual;
             noCaminho.no = noAtual;
             caminho.push_back(noCaminho);
@@ -99,9 +99,9 @@ class BPTree1 {
         }
 
         // Função para inserir chave na árvore e ajustar a árvore
-        static void inserirNaArvore(int chave, size_t indiceBloco, std::vector<NoCaminho>& caminho) {
+        static void inserirNaArvore(int chave, size_t indiceBloco, std::vector<No1Caminho>& caminho) {
             // Obter o nó folha
-            NoCaminho noCaminho = caminho.back();
+            No1Caminho noCaminho = caminho.back();
             size_t indiceNo = noCaminho.indiceNo;
             No1 no = noCaminho.no;
 
@@ -123,15 +123,14 @@ class BPTree1 {
                 no.chaves[i + 1] = chave;
                 no.ponteiro[i + 1] = indiceBloco;
                 no.numChaves++;
-
                 escreverNo(indiceNo, no);
                 return;
             
             }
         }
 
-        static void dividirNoFolha(int chave, size_t indiceBloco, std::vector<NoCaminho>& caminho) {
-            NoCaminho noCaminho = caminho.back();
+        static void dividirNoFolha(int chave, size_t indiceBloco, std::vector<No1Caminho>& caminho) {
+            No1Caminho noCaminho = caminho.back();
             size_t indiceNo = noCaminho.indiceNo;
             No1 no = noCaminho.no;
 
@@ -169,10 +168,15 @@ class BPTree1 {
             }
 
             no.numChaves = M;
+            // Copiar metade das chaves e ponteiros para o nó atual
+            for(int i = 0; i < no.numChaves; i++) {
+                no.chaves[i] = chavesAuxiliar[i];
+                no.ponteiro[i] = ponteirosAuxiliar[i];
+            }
 
             // Ajustando ponteiros das proximas folhas  
             novoNo.ponteiro[2*M] = no.ponteiro[2*M];
-            size_t novoIndiceNo = proximoIndice++;
+            size_t novoIndiceNo = proximoIndice1++;
             no.ponteiro[2*M] = novoIndiceNo;
 
             escreverNo(indiceNo, no);
@@ -193,8 +197,8 @@ class BPTree1 {
         }
 
         // Função para inserir chave em nó interno
-        static void inserirNoInterno(int chave, std::vector<NoCaminho>& caminho, size_t indiceDireita) {
-            NoCaminho noCaminho = caminho.back();
+        static void inserirNoInterno(int chave, std::vector<No1Caminho>& caminho, size_t indiceDireita) {
+            No1Caminho noCaminho = caminho.back();
             size_t indiceNo = noCaminho.indiceNo;
             No1 no = noCaminho.no;
 
@@ -220,8 +224,8 @@ class BPTree1 {
             }
         }
 
-        static void dividirNoInterno(int chave, size_t indiceNo, std::vector<NoCaminho>& caminho) {
-            NoCaminho noCaminho = caminho.back();
+        static void dividirNoInterno(int chave, size_t indiceNo, std::vector<No1Caminho>& caminho) {
+            No1Caminho noCaminho = caminho.back();
             size_t indiceNoAtual = noCaminho.indiceNo;
             No1 no = noCaminho.no;
 
@@ -261,22 +265,28 @@ class BPTree1 {
                 novoNo.chaves[i] = chavesAuxiliar[M + i + 1];
                 novoNo.ponteiro[i] = ponteirosAuxiliar[M + i + 1];
             }
-
             novoNo.ponteiro[novoNo.numChaves] = ponteirosAuxiliar[2*M + 1];
+            
+            // Copiar metade das chaves e ponteiros para o nó atual
             no.numChaves = M;
+            for(int i = 0; i < no.numChaves; i++) {
+                no.chaves[i] = chavesAuxiliar[i];
+                no.ponteiro[i] = ponteirosAuxiliar[i];
+            }
+            no.ponteiro[no.numChaves] = ponteirosAuxiliar[M];
 
             size_t chaveMediana = chavesAuxiliar[M];
 
-            size_t novoIndiceNo = proximoIndice++;
+            size_t novoIndiceNo = proximoIndice1++;
 
-            escreverNo(indiceNo, no);
+            escreverNo(indiceNoAtual, no);
             escreverNo(novoIndiceNo, novoNo);
             metadados.totalBlocosIndicePrimario++;
 
 
             if(caminho.empty()) {
                 // Criar novo nó raiz
-                novaRaiz(indiceNo, novoIndiceNo, chaveMediana);
+                novaRaiz(indiceNoAtual, novoIndiceNo, chaveMediana);
             } else {
                 // Inserir chave mediana no nó pai
                 inserirNoInterno(chaveMediana, caminho, novoIndiceNo);
@@ -339,15 +349,29 @@ class BPTree1 {
         }
 
         static void inserir(int chave, size_t indiceBloco) {
-            std::vector<NoCaminho> caminho;
+            std::vector<No1Caminho> caminho;
             size_t indiceFolha = encontrarFolha(chave, metadados.indiceRaizPrimario, caminho);
-
+            
             inserirNaArvore(chave, indiceBloco, caminho);
         }
 
         static size_t buscaRegistro(int chave) {
             metadados.blocosLidosUtimaConsultaIndicePrimario = 0;
             return buscarRecursivo(chave, metadados.indiceRaizPrimario);
+        }
+
+        static No1 lerNoTeste(size_t indice) {
+            std::ifstream arquivo(ARQUIVO_INDICE_PRIMARIO, std::ios::in | std::ios::binary);
+            if(!arquivo) {
+                std::cout << "Não consigo ler No1 porque arquivo de indice primário não existe! Verifique se o diretório bd existe" << std::endl;
+                exit(1);
+            }
+            arquivo.seekg(indice * sizeof(No1), std::ios::beg);
+            No1 no;
+
+            arquivo.read(reinterpret_cast<char*>(&no), sizeof(No1));
+            arquivo.close();
+            return no;
         }
 
 };

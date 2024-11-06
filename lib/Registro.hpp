@@ -38,7 +38,7 @@ Registro criarRegistro(int id, const char* titulo, int ano, const char* autores,
 void sanitizeString(char* str) {
     for (int i = 0; str[i] != '\0'; ++i) {
         if (!std::isprint(static_cast<unsigned char>(str[i]))) { // Faz caracter especial virar 0
-            str[i] = '0';
+            str[i] = ' ';
         }
     }
 }

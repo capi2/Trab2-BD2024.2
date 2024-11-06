@@ -17,6 +17,7 @@ struct MetaDados {
     size_t blocosLidosUtimaConsultaIndiceSecundario;
     size_t indiceRaizPrimario;
     size_t indiceRaizSecundario;
+    bool arquivoCSVLido;
 
     MetaDados() {
         totalBlocos = 0;
@@ -29,6 +30,7 @@ struct MetaDados {
         blocosLidosUtimaConsultaIndiceSecundario = 0;
         indiceRaizPrimario = 0;
         indiceRaizSecundario = 0;
+        arquivoCSVLido = false;
     }
 };
 
@@ -93,7 +95,7 @@ class MetaDadosManager {
             std::cout << "Blocos Lidos na última consulta ao Índice Secundário: " << metadados.blocosLidosUtimaConsultaIndiceSecundario << std::endl;
             std::cout << "Indice Raiz Primário: " << metadados.indiceRaizPrimario << std::endl;
             std::cout << "Indice Raiz Secundário: " << metadados.indiceRaizSecundario << std::endl;
-
+            std::cout << "Arquivo csv lido: " << metadados.arquivoCSVLido << std::endl;
 
 
             std::cout << " ===== METADADOS ===== \n" << std::endl;
