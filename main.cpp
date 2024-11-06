@@ -11,6 +11,7 @@
 int main() {
 
     int comando;
+    MetaDadosManager::inicializarArquivo();
 
     std::cout << " ===== BD2024.2 trabalho-pratico-2 ===== \n" << std::endl;
     std::cout << "O programa implementa o comportamento de um banco de dados utilizando arquivo de dados por hash e arquivo de indice com árvore B+." << std::endl;
@@ -28,23 +29,16 @@ int main() {
 
         std::cin >> comando;
 
-        if(metadados.arquivoCSVLido) {
-            MetaDadosManager::lerMetaDados();
-        }
-
         switch (comando)
         {
         case 0:
             TabelaHash::inicializarArquivo();
-            MetaDadosManager::inicializarArquivo();
             BPTree1::inicializarArquivo();
             BPTree2::inicializarArquivo();
 
             std::cout << std::endl;
             Reader::uploadCSV(COMPLETO_CSV_PATH);
             std::cout << std::endl;
-
-            
 
             break;
 

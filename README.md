@@ -22,7 +22,17 @@ g++ main.cpp -o main
 
 ### Estruturas e Decisões
 
-O arquivo de dados feito em hash, fizemos 1 bloco por bucket pois facilita a implementação devido a dificuldade que tivemos durante o trabalho, outra coisa é que não foi implementado os buckets de overflow
+#### Hash
+
+O arquivo de dados feito em hash, fizemos 1 bloco por bucket pois facilita a implementação devido a dificuldade que tivemos durante o trabalho, outra coisa é que não foi implementado os buckets de overflow, por esse motivo tivemos que fazer um hash quase perfeito. Portanto pegamos o ID do último registro como tamanho do hash para evitar colisões.
+
+Indice Primário
+
+Aqui implementamos uma árvore B+ com M = 170 e conseguimos ocupar a struct do bloco de nó com exatamente 4096 bytes, como todos os blocos no programa. Usamos uma única struct para nós internos e folhas usando um booleano na struct dizendo se é folha ou não. Usamos busca sequencial para procurar a chave correta dentro do bloco da folha. A localização do nós no arquivo foi implementada de acordo com o crescimento da árvore os novos nós incluindo a raíz são escritas no final do arquivo e o indice da raíz fica salva nos metadados.
+
+Indice Secundário
+
+Aqui implementamos uma árvore B+ com M =6 e utilizamos um padding para ocupar os 4096 bytes, como todos os blocos no programa. Usamos uma única struct para nós internos e folhas usando um booleano na struct dizendo se é folha ou não. Usamos busca sequencial para procurar a chave correta dentro do bloco da folha. A localização do nós no arquivo foi implementada de acordo com o crescimento da árvore os novos nós incluindo a raíz são escritas no final do arquivo e o indice da raíz dica salva nos metadados. E as chaves de comparação de título passam por um tratamento para eliminar caracteres especiais e permitir comparação com strcmp.
 
 ### Arquivos
 
